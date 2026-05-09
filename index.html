@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Рандомайзер студентов</title>
+<style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #1e1b4b, #4c1d95, #7e22ce);
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+
+    .box {
+        width: 90%;
+        max-width: 750px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 35px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 34px;
+    }
+
+    #result {
+        min-height: 90px;
+        margin: 30px 0;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.18);
+        border-radius: 18px;
+        font-size: 34px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        border: none;
+        padding: 18px 35px;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: 14px;
+        cursor: pointer;
+        background: white;
+        color: #4c1d95;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        background: #f3e8ff;
+    }
+
+    .list {
+        margin-top: 25px;
+        max-height: 240px;
+        overflow-y: auto;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.7;
+        background: rgba(0, 0, 0, 0.18);
+        padding: 15px 25px;
+        border-radius: 14px;
+    }
+    .desktop-hosted {
+        display: none;
+        position: fixed;
+        right: 16px;
+        bottom: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: rgba(255, 255, 255, 0.78);
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        padding: 7px 12px;
+        backdrop-filter: blur(8px);
+        user-select: none;
+        pointer-events: none;
+    }
+
+    @media (min-width: 900px) {
+        .desktop-hosted.show-hosting {
+            display: block;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>🎲 Рандомайзер студентов</h1>
+
+    <div id="result">Нажмите кнопку</div>
+
+    <button onclick="chooseStudent()">Выбрать студента</button>
+
+    <div class="list" id="studentList"></div>
+</div>
+
+<script>
+const allStudents = [
+    "ABDULLAYEV IBROHIMBEK",
+    "ABDULLAYEV KOZIMBEK",
+    "ABDULLAYEV NURSULTON",
+    "ABUBAKIROV DONIYOR",
+    "ALIMOVA JASMINA",
+    "AXMEDOVA SARVINOZ",
+    "BEKJONALIYEV SULTONMUROD",
+    "CHORIYEV FERUZBEK",
+    "IBADULLAYEV AZIZBEK",
+    "IBROXIMOV BEKZOD",
+    "IZZATULLAYEV SHOHRUHBEK",
+    "JALOLIDDINOV AVAZBEK",
+    "JANABERGENOV ARTUR",
+    "MAMATOV XOJIAKBAR",
+    "MENGLIYEV ABDUKARIM",
+    "MIRXONOV AMIRXON",
+    "MUYNAKBAEVA GULNAZ",
+    "NURIDINOVA RUXSHONA",
+    "RAVSHANBEKOVA SABINA",
+    "SAIDXO‘JAYEVA SHAXRIZODAXON",
+    "SHAVKATOV ABDURAXIM",
+    "SOBIDOV ZIYODULLO",
+    "SOBIROV ABRORBEK",
+    "TURSUNAXMADOV JAHONGIR",
+    "URAZBEKOV AYDAR",
+    "VANG TIANYU",
+    "XAMIDOV XISRAVBEK",
+    "ZOIROVA GO‘ZAL"
+];
+
+const randomPool = [
+    "ABDULLAYEV IBROHIMBEK",
+    "ABDULLAYEV KOZIMBEK",
+    "ABDULLAYEV NURSULTON",
+    "ABUBAKIROV DONIYOR",
+    "BEKJONALIYEV SULTONMUROD",
+    "CHORIYEV FERUZBEK",
+    "IBADULLAYEV AZIZBEK",
+    "IBROXIMOV BEKZOD",
+    "IZZATULLAYEV SHOHRUHBEK",
+    "JALOLIDDINOV AVAZBEK",
+    "JANABERGENOV ARTUR",
+    "MAMATOV XOJIAKBAR",
+    "MENGLIYEV ABDUKARIM",
+    "MIRXONOV AMIRXON",
+    "SHAVKATOV ABDURAXIM",
+    "SOBIDOV ZIYODULLO",
+    "SOBIROV ABRORBEK",
+    "TURSUNAXMADOV JAHONGIR",
+    "URAZBEKOV AYDAR",
+    "VANG TIANYU",
+    "XAMIDOV XISRAVBEK"
+];
+
+function chooseStudent() {
+    const result = document.getElementById("result");
+    let count = 0;
+
+    const animation = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * randomPool.length);
+        result.textContent = randomPool[randomIndex];
+        count++;
+
+        if (count > 25) {
+            clearInterval(animation);
+            const finalIndex = Math.floor(Math.random() * randomPool.length);
+            result.textContent = randomPool[finalIndex];
+        }
+    }, 80);
+}
+
+document.getElementById("studentList").innerHTML = allStudents
+    .map((student, index) => `${index + 1}. ${student}`)
+    .join("<br>");
+</script>
+<div class="desktop-hosted">Hosted by Sayfiddinov™</div>
+<script>
+const hostingBadge = document.querySelector(".desktop-hosted");
+const hostingShowDate = new Date(2026, 4, 12); // 12 мая 2026, то есть после 11 мая
+
+if (hostingBadge && new Date() >= hostingShowDate) {
+    hostingBadge.classList.add("show-hosting");
+}
+</script>
+
+</body>
+</html>
